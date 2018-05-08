@@ -4,6 +4,7 @@ Temp/
 *.sln
 *.csproj
 *.sln
+obj/
 *.userprefs
 *.unityproj
 *.DS_Store
