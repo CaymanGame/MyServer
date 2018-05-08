@@ -11,6 +11,7 @@ using LitJson;
     /// <summary>
     /// 客服端在服务器的实例
     /// 20170323：接收客服端的消息，处理消息，反馈消息，停用客服端
+    /// 
     /// </summary>
     class N_client : A_Client,I_sendBackClient
     {
