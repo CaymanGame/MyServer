@@ -23,8 +23,11 @@ namespace ConnectData
         static void Main(string[] args)
         {
             //S_sql.M_instance.fn_open_connect();
+             //开始服务器类的创建
             ServerTest t_server = new ServerTest();
+             //打开服务器
             t_server.fn_startServer();
+             //打开mysql的链接
             S_sql.M_instance.fn_open_connect();
 
             //ConnectMysql t_mysql = new ConnectMysql();

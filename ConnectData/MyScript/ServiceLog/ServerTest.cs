@@ -19,9 +19,9 @@ using LitJson;
     {
         ////用来装载收到的消息
         //private static byte[] m_result = new byte[1024];
-      /// <summary>
-        ///   //监听套接字,用于服务器监听客服端的套接字
-      /// </summary>
+     /// <summary>
+     ///   //监听套接字,用于服务器监听客服端的套接字
+     /// </summary>
         private static Socket m_severSocket;
         //服务器ip地址
         private static IPAddress t_ip = IPAddress.Parse("10.15.19.84");
