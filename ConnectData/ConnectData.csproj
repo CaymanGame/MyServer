@@ -84,7 +84,6 @@
     <Compile Include="MyScript\Messages\N_msg_test_end.cs" />
     <Compile Include="MyScript\Messages\N_msg_test_start.cs" />
     <Compile Include="MyScript\Messages\N_msg_test_step.cs" />
-    <Compile Include="MyScript\Messages\TcpMsg\AB_tcpMsgPool.cs" />
     <Compile Include="MyScript\SClient\A_Client.cs" />
     <Compile Include="MyScript\DataBase\A_connectTodata.cs" />
     <Compile Include="MyScript\HandMsg\A_handleMsg.cs" />
@@ -135,7 +134,9 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="MyScript\Messages\TcpMsg\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -150,56 +150,57 @@ using LitJson;
             bool t_waitClientID=true;
             byte[] t_result = new byte[1024];
             while (t_waitClientID)
-            {
+            {//这里要注意，如果客户端掉线，那么这个地方会一直等待，可能会出现这样的问题,
+                 //解决方案是等待一段时间后仍无相应，那么关掉等待
                 
-                                    try {
+               try {
 
-                                                //把收到的byte数组转成字符串
-                                            int t_receivedNumber = t_clientSoket.Receive(t_result);
-                                            string t_message = Encoding.UTF8.GetString(t_result, 0, t_receivedNumber);
-                                                //把字符串转成想要的对象
-                                                A_baseMsg t_basemsg = JsonMapper.ToObject<A_baseMsg>(t_message);
-                                                if (t_basemsg != null)
-                                                {
-                                                    if (t_basemsg.m_msgName == "N_msg_helloToServer")
-                                                    {
-                                                        N_msg_helloToServer t_user = JsonMapper.ToObject<N_msg_helloToServer>(t_message);
-                                                        if (t_user.m_key == "hello,server,xreal,XREAL,0322")
-                                                        {//链接服务器成功
-                                                            t_waitClientID = false;//结束循环
-                                                            //加入到客服端集合中
-                                                            S_ClientSocket.M_instance.fn_addSokect(t_clientSoket);
-                                                            //加入成功，反馈给客服端已经链接成功
-                                                            N_msg_helloToServer_back t_back = new N_msg_helloToServer_back(true);
-                                                            string t_jsonback = JsonMapper.ToJson(t_back);
-                                                            t_clientSoket.Send(Encoding.UTF8.GetBytes(t_jsonback));
+                         //把收到的byte数组转成字符串
+                    int t_receivedNumber = t_clientSoket.Receive(t_result);
+                    string t_message = Encoding.UTF8.GetString(t_result, 0, t_receivedNumber);
+                         //把字符串转成想要的对象
+                         A_baseMsg t_basemsg = JsonMapper.ToObject<A_baseMsg>(t_message);
+                         if (t_basemsg != null)
+                         {
+                              if (t_basemsg.m_msgName == "N_msg_helloToServer")
+                              {
+                                   N_msg_helloToServer t_user = JsonMapper.ToObject<N_msg_helloToServer>(t_message);
+                                   if (t_user.m_key == "hello,server,xreal,XREAL,0322")
+                                   {//链接服务器成功
+                                   t_waitClientID = false;//结束循环
+                                   //加入到客服端集合中
+                                   S_ClientSocket.M_instance.fn_addSokect(t_clientSoket);
+                                   //加入成功，反馈给客服端已经链接成功
+                                   N_msg_helloToServer_back t_back = new N_msg_helloToServer_back(true);
+                                   string t_jsonback = JsonMapper.ToJson(t_back);
+                                   t_clientSoket.Send(Encoding.UTF8.GetBytes(t_jsonback));
 
-                                                        }
-                                                        else
-                                                        {
-                                                            N_msg_helloToServer_back t_back = new N_msg_helloToServer_back(false);
-                                                            string t_jsonback = JsonMapper.ToJson(t_back);
-                                                            t_clientSoket.Send(Encoding.UTF8.GetBytes(t_jsonback));
+                                   }
+                                   else
+                                   {
+                                   N_msg_helloToServer_back t_back = new N_msg_helloToServer_back(false);
+                                   string t_jsonback = JsonMapper.ToJson(t_back);
+                                   t_clientSoket.Send(Encoding.UTF8.GetBytes(t_jsonback));
 
-                                                            t_waitClientID = false;//结束循环
-                                                            t_clientSoket.Close();
-                                                            t_clientSoket.Dispose();
-                                                        }
-                                                    }
-                                                }
-                                                else {
-                                                    Console.WriteLine("传入对象不能转换成正确的消息类");
-                                                    t_waitClientID = false;//结束循环
-                                                }
+                                   t_waitClientID = false;//结束循环
+                                   t_clientSoket.Close();
+                                   t_clientSoket.Dispose();
+                                   }
+                              }
+                         }
+                         else {
+                              Console.WriteLine("传入对象不能转换成正确的消息类");
+                              t_waitClientID = false;//结束循环
+                         }
                       
-                                        }
-                                        catch(Exception _e) {
-                                            t_waitClientID = false;
-                                                //Console.WriteLine(_e.Message);
-                                                t_clientSoket.Close();
-                                                t_clientSoket.Dispose();
-                                                //throw;
-                                        }
+               }
+               catch(Exception _e) {
+                    t_waitClientID = false;
+                         //Console.WriteLine(_e.Message);
+                         t_clientSoket.Close();
+                         t_clientSoket.Dispose();
+                         //throw;
+               }
                                 
             
             }
