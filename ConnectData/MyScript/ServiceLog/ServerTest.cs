@@ -155,7 +155,7 @@ using LitJson;
                 
                try {
 
-                         //把收到的byte数组转成字符串
+                         //把收到的byte数组转成字符串,这里也需要注意，还没有处理粘包，粘包的问题
                     int t_receivedNumber = t_clientSoket.Receive(t_result);
                     string t_message = Encoding.UTF8.GetString(t_result, 0, t_receivedNumber);
                          //把字符串转成想要的对象
